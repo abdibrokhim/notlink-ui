@@ -40,16 +40,21 @@ export default function Shorten() {
   
     // 4. Validate as a URL
     try {
-      // If user might omit protocol, prepend it. Example:
+      // If user might omit protocol, prepend it
       if (!/^https?:\/\//i.test(val)) {
         val = 'https://' + val;
       }
   
-      // Construct to ensure it’s a valid URL
+      // Construct to ensure it's a valid URL
       const parsed = new URL(val);
 
-      // You could also re-build the string from `parsed.origin + parsed.pathname`
-      // if you want to ensure it’s absolutely “clean.”
+      // Validate URL has proper domain structure
+      if (!parsed.hostname.includes('.') || parsed.hostname.length < 3) {
+        console.log('invalid domain');
+        return;
+      }
+
+      // Clean the URL
       val = parsed.origin + parsed.pathname;
     } catch (error) {
       console.log('invalid URL');
@@ -62,7 +67,7 @@ export default function Shorten() {
       return;
     }
   
-    // 6. All good, set the shortened URL
+    // 6. All good, set the URL
     console.log('valid URL: ', val);
     setLongURL(val);
   }
