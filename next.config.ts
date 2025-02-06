@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     NOTLINK_UI_HOST: process.env.NOTLINK_UI_HOST,
     THIRDWEB_CLIENT_ID: process.env.THIRDWEB_CLIENT_ID,
     THIRDWEB_SECRET_KEY: process.env.THIRDWEB_SECRET_KEY,
+    TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY,
+    TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
+    WHICH_NODE_ENV: process.env.WHICH_NODE_ENV,
   },
 
   async rewrites() {

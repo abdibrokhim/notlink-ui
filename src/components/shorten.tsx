@@ -8,6 +8,9 @@ import { useState } from "react"
 import { loader } from "@/lib/getLoader"
 import { getOnLoadCodeList } from "@/lib/getOnLoadCodeList"
 import { ShortURLResponse, WalletResponse } from "./types"
+import { Turnstile } from "next-turnstile";
+
+type TurnstileStatus = "required" | "success" | "error" | "expired";
 
 export default function Shorten() {
   const [loading, setLoading] = useState(false);
@@ -19,6 +22,10 @@ export default function Shorten() {
   const [shortenedURL, setShortenedURL] = useState<string | null>(null);
   const [encrypted, setEncrypted] = useState<boolean>(false);
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
+
+  const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>("required");
+  const [turnstileError, setTurnstileError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let val = e.target.value.trim();
@@ -78,6 +85,11 @@ export default function Shorten() {
       return;
     }
 
+    if (turnstileStatus !== "success") {
+      setTurnstileError("Please verify you are not a robot first.");
+      return;
+    }
+
     setOnShorten(true);
     setLoading(true);
 
@@ -90,7 +102,8 @@ export default function Shorten() {
         body: JSON.stringify({ 
           long_url: val,
           encrypted: encrypted,
-          transaction_hash: transactionHash
+          transaction_hash: transactionHash,
+          turnstile_token: turnstileToken,
         }),
       });
       const data: ShortURLResponse = await response.json();
@@ -162,6 +175,37 @@ export default function Shorten() {
             </Button>
           </div>
         </div>
+      </div>
+
+      <div className="mt-4 text-center">
+        <Turnstile
+          siteKey={process.env.TURNSTILE_SITE_KEY!}
+          retry="auto"
+          refreshExpired="auto"
+          sandbox={process.env.WHICH_NODE_ENV === "development"}
+          onError={() => {
+            setTurnstileStatus("error");
+            setTurnstileError("Security check failed. Please try again.");
+          }}
+          onExpire={() => {
+            setTurnstileStatus("expired");
+            setTurnstileError("Security check expired. Please verify again.");
+          }}
+          onLoad={() => {
+            setTurnstileStatus("required");
+            setTurnstileError(null);
+          }}
+          onVerify={(token) => {
+            setTurnstileStatus("success");
+            setTurnstileError(null);
+            setTurnstileToken(token);
+          }}
+        />
+        {turnstileError && (
+          <div className="text-red-500 text-sm mt-2" aria-live="polite">
+            {turnstileError}
+          </div>
+        )}
       </div>
 
       <div className="mt-4 min-h-[4rem]">

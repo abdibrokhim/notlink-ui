@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ShortURLResponse } from '@/components/types';
+import { validateTurnstileToken } from "next-turnstile";
+import { v4 } from "uuid";
 
 export async function POST(request: Request) {
   try {
@@ -8,6 +10,7 @@ export async function POST(request: Request) {
     const longURL = requestBody.long_url;
     const encrypted = requestBody.encrypted;
     const transactionHash = requestBody.transaction_hash;
+    const turnstileToken = requestBody.turnstile_token;
 
     if (!longURL) {
       return NextResponse.json(
@@ -15,6 +18,18 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     };
+
+    const validationResponse = await validateTurnstileToken({
+      token: turnstileToken,
+      secretKey: process.env.TURNSTILE_SECRET_KEY!,
+      // Optional: Add an idempotency key to prevent token reuse
+      idempotencyKey: v4(),
+      sandbox: process.env.WHICH_NODE_ENV === "development",
+    });
+  
+    if (!validationResponse.success) {
+      return NextResponse.json({ message: "Invalid token" }, { status: 400 });
+    }
 
     // Call the backend API to shorten the URL
     const response = await fetch(`${process.env.NOTLINK_BACKEND_HOST}/shorten`, {
