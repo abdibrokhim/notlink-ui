@@ -13,3 +13,31 @@ The following environment variables can be used to configure notlink ui:
 | `NOTLINK_UI_HOST`              | `string` | `0.0.0.0:3000`   | The IP / port that the notlink ui should be hosted at.                              |
 | `NOTLINK_BACKEND_HOST`         | `string` | `0.0.0.0:8000`   | The IP / port that the notlink backend is hosted at.                                |
 | `THIRDWEB_CLIENT_ID` | `string` | `...`          | The client id for the thirdweb api.                                                   |
+
+
+## Donate & Support
+
+- [Support on Open Collective](https://opencollective.com/opencommunity)
+- [Support on Patreon](https://www.patreon.com/abdibrokhim)
+
+### Crypto
+
+- Bitcoin: bc1qpylxaqwapk0tgdmpnnljj545z4lk2z9q5us6p6
+- Ethereum: 0xb4a8e71d82e8Bf84a02C7770585F9cD8b267aDB9
+- Solana: 4MpPHapcdb5MwRy57juUQ2wUt1EJo8BYqXsYKwSfCvz1
+
+You can also find them here on [my official website](https://imcook.in) (scroll a little down)
+
+## Contributing
+
+You can just Contribute. Kindly check the [CONTRIBUTING.md](https://github.com/abdibrokhim/notlink-ui/blob/main/CONTRIBUTING.md)
+
+## Community
+
+Join the community on [Discord](https://discord.gg/nUdcd9p8Ae)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=abdibrokhim/notlink-ui&type=Date)](https://star-history.com/#abdibrokhim/notlink-ui&Date)
+
+Put a star ⭐️
