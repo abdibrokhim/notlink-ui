@@ -89,7 +89,7 @@ export default function Shorten() {
         }),
       });
       const data: ShortURLResponse = await response.json();
-      console.log('Reponse', data);
+      console.log('Response', data);
       setShortenedURL(`${shortUrl}/${data.short_code}`);
     } catch (error) {
       console.error('Error:', error);
