@@ -55,6 +55,36 @@ export default function Shorten() {
       // Construct to ensure it's a valid URL
       const parsed = new URL(val);
 
+      // Block localhost/127.0.0.1 and similar
+      if (
+        parsed.hostname === 'localhost' ||
+        parsed.hostname.includes('127.0.0.') ||
+        parsed.hostname.includes('0.0.0.') ||
+        parsed.hostname.includes('::1') ||
+        parsed.hostname.endsWith('.localhost')
+      ) {
+        console.log('localhost not allowed');
+        return;
+      }
+
+      // Block own domain
+      if (parsed.hostname === 'notl.ink') {
+        console.log('cannot shorten own domain');
+        return;
+      }
+
+      // Block suspicious patterns
+      if (
+        parsed.hostname.match(/^(\d{1,3}\.){3}\d{1,3}$/) || // IP addresses
+        parsed.hostname.includes('0x') || // Hex IPs
+        parsed.hostname.includes('://') || // URL injection attempts
+        parsed.pathname.includes('../') || // Path traversal
+        parsed.hostname.match(/[^a-zA-Z0-9.-]/) // Non-standard chars in hostname
+      ) {
+        console.log('suspicious URL pattern');
+        return;
+      }
+
       // Validate URL has proper domain structure
       if (!parsed.hostname.includes('.') || parsed.hostname.length < 3) {
         console.log('invalid domain');
