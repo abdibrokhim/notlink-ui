@@ -18,7 +18,7 @@ export default function Shorten() {
   const [onShorten, setOnShorten] = useState(false);
   const onLoadCodeList: string[] = getOnLoadCodeList();
   const shortCode = onLoadCodeList[0];
-  const shortUrl = "https://notl.ink";
+  const domainName = `https://${process.env.DOMAIN_NAME}`;
   const [shortenedURL, setShortenedURL] = useState<string | null>(null);
   const [encrypted, setEncrypted] = useState<boolean>(false);
   const [transactionHash, setTransactionHash] = useState<string | null>(null);
@@ -98,7 +98,7 @@ export default function Shorten() {
       }
 
       // Block own domain
-      if (parsed.hostname === 'notl.ink' || parsed.hostname === 'www.notl.ink') {
+      if (parsed.hostname === process.env.DOMAIN_NAME || parsed.hostname === `www.${process.env.DOMAIN_NAME}`) {
         console.log('cannot shorten own domain');
         return;
       }
@@ -150,7 +150,7 @@ export default function Shorten() {
       });
       const data: ShortURLResponse = await response.json();
       console.log('Response', data);
-      setShortenedURL(`${shortUrl}/${data.short_code}`);
+      setShortenedURL(`${domainName}/${data.short_code}`);
     } catch (error) {
       console.error('Error:', error);
     } 

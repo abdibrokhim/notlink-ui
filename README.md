@@ -12,7 +12,12 @@ The following environment variables can be used to configure notlink ui:
 | ------------------------------ | -------- | ---------------- | ----------------------------------------------------------------------------------- |
 | `NOTLINK_UI_HOST`              | `string` | `0.0.0.0:3000`   | The IP / port that the notlink ui should be hosted at.                              |
 | `NOTLINK_BACKEND_HOST`         | `string` | `0.0.0.0:8000`   | The IP / port that the notlink backend is hosted at.                                |
-| `THIRDWEB_CLIENT_ID` | `string` | `...`          | The client id for the thirdweb api.                                                   |
+| `THIRDWEB_CLIENT_ID`           | `string` | `...`            | The client id for the thirdweb api.                                                 |
+| `THIRDWEB_SECRET_KEY`          | `string` | `...`            | The secret key for the thirdweb api.                                                |
+| `TURNSTILE_SITE_KEY`           | `string` | `...`            | The site key for Cloudflare Turnstile bot protection.                               |
+| `TURNSTILE_SECRET_KEY`         | `string` | `...`            | The secret key for Cloudflare Turnstile bot protection.                             |
+| `WHICH_NODE_ENV`               | `string` | `development`     | The node environment (development/production).                                       |
+| `DOMAIN_NAME`                  | `string` | `localhost:3000`  | The domain name where the application is hosted.                                    |
 
 
 ## Donate & Support

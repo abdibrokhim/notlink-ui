@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY,
     TURNSTILE_SECRET_KEY: process.env.TURNSTILE_SECRET_KEY,
     WHICH_NODE_ENV: process.env.WHICH_NODE_ENV,
+    DOMAIN_NAME: process.env.DOMAIN_NAME,
   },
 
   async rewrites() {
