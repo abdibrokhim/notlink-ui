@@ -36,75 +36,87 @@ export default function Shorten() {
       return;
     }
   
-    // 2. Disallow curly and square brackets
-    if (/[{}\[\]]/.test(val)) {
+    // 2. Disallow braces, brackets, invisible unicode, etc.
+    if (/[{}\[\]\u200B-\u200D\uFEFF]/.test(val)) {
       console.log('invalid character');
       return;
     }
   
-    // 3. Remove query string or fragment (anything after ? or #)
+    // 3. Remove anything after ? or # if you do not allow queries/fragments
     val = val.replace(/[?#].*$/, '');
   
-    // 4. Validate as a URL
+    // 4. Ensure protocol is present; default to https if missing
+    if (!/^https?:\/\//i.test(val)) {
+      val = 'https://' + val;
+    }
+  
     try {
-      // If user might omit protocol, prepend it
-      if (!/^https?:\/\//i.test(val)) {
-        val = 'https://' + val;
+      const parsed = new URL(val);
+  
+      // 5. Restrict protocols to only https (optional)
+      if (parsed.protocol !== 'https:') {
+        console.log('only HTTPS allowed');
+        return;
       }
   
-      // Construct to ensure it's a valid URL
-      const parsed = new URL(val);
-
-      // Block localhost/127.0.0.1 and similar
+      // 6. Check ports (optional)
+      if (parsed.port && !['80', '443'].includes(parsed.port)) {
+        console.log('invalid or unsupported port');
+        return;
+      }
+  
+      // 7. Block local or private IP ranges
+      // (You can do more advanced checking or IP resolution server-side)
+      const hostname = parsed.hostname;
       if (
-        parsed.hostname === 'localhost' ||
-        parsed.hostname.includes('127.0.0.') ||
-        parsed.hostname.includes('0.0.0.') ||
-        parsed.hostname.includes('::1') ||
-        parsed.hostname.endsWith('.localhost')
+        hostname === 'localhost' ||
+        /^127\.\d+\.\d+\.\d+$/.test(hostname) ||
+        /^10\.\d+\.\d+\.\d+$/.test(hostname) ||
+        /^192\.168\.\d+\.\d+$/.test(hostname) ||
+        hostname.endsWith('.localhost') ||
+        // And so on for other private ranges...
+        hostname.includes('::1')
       ) {
-        console.log('localhost not allowed');
+        console.log('private/localhost not allowed');
         return;
       }
-
-      // Block own domain
-      if (parsed.hostname === 'notl.ink') {
-        console.log('cannot shorten own domain');
-        return;
-      }
-
-      // Block suspicious patterns
+  
+      // 8. Check for suspicious patterns or direct IP addresses
       if (
-        parsed.hostname.match(/^(\d{1,3}\.){3}\d{1,3}$/) || // IP addresses
-        parsed.hostname.includes('0x') || // Hex IPs
-        parsed.hostname.includes('://') || // URL injection attempts
-        parsed.pathname.includes('../') || // Path traversal
-        parsed.hostname.match(/[^a-zA-Z0-9.-]/) // Non-standard chars in hostname
+        hostname.match(/^(\d{1,3}\.){3}\d{1,3}$/) || // IPv4
+        hostname.includes('0x') || // Hex IP
+        hostname.match(/[^a-zA-Z0-9.-]/) // Non-standard chars
       ) {
-        console.log('suspicious URL pattern');
+        console.log('suspicious hostname pattern');
         return;
       }
-
-      // Validate URL has proper domain structure
-      if (!parsed.hostname.includes('.') || parsed.hostname.length < 3) {
+  
+      // 9. Ensure there's a dot in the hostname (basic public domain check)
+      if (!hostname.includes('.') || hostname.length < 3) {
         console.log('invalid domain');
         return;
       }
 
-      // Clean the URL
+      // Block own domain
+      if (parsed.hostname === 'notl.ink' || parsed.hostname === 'www.notl.ink') {
+        console.log('cannot shorten own domain');
+        return;
+      }
+  
+      // 10. Final cleaning: reconstruct the allowed final URL
       val = parsed.origin + parsed.pathname;
     } catch (error) {
       console.log('invalid URL');
       return;
     }
   
-    // 5. If the final, stripped URL is still too long
+    // 11. Final length check
     if (val.length > 200) {
       console.log('length exceeded');
       return;
     }
   
-    // 6. All good, set the URL
+    // 12. Success
     console.log('valid URL: ', val);
     setLongURL(val);
   }
@@ -207,37 +219,6 @@ export default function Shorten() {
         </div>
       </div>
 
-      <div className="mt-4 text-center">
-        <Turnstile
-          siteKey={process.env.TURNSTILE_SITE_KEY!}
-          retry="auto"
-          refreshExpired="auto"
-          sandbox={process.env.WHICH_NODE_ENV === "development"}
-          onError={() => {
-            setTurnstileStatus("error");
-            setTurnstileError("Security check failed. Please try again.");
-          }}
-          onExpire={() => {
-            setTurnstileStatus("expired");
-            setTurnstileError("Security check expired. Please verify again.");
-          }}
-          onLoad={() => {
-            setTurnstileStatus("required");
-            setTurnstileError(null);
-          }}
-          onVerify={(token) => {
-            setTurnstileStatus("success");
-            setTurnstileError(null);
-            setTurnstileToken(token);
-          }}
-        />
-        {turnstileError && (
-          <div className="text-red-500 text-sm mt-2" aria-live="polite">
-            {turnstileError}
-          </div>
-        )}
-      </div>
-
       <div className="mt-4 min-h-[4rem]">
         {!onShorten ? (
           null
@@ -283,6 +264,37 @@ export default function Shorten() {
                 </div>
               )}
             </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-4 text-center">
+        <Turnstile
+          siteKey={process.env.TURNSTILE_SITE_KEY!}
+          retry="auto"
+          refreshExpired="auto"
+          sandbox={process.env.WHICH_NODE_ENV === "development"}
+          onError={() => {
+            setTurnstileStatus("error");
+            setTurnstileError("Security check failed. Please try again.");
+          }}
+          onExpire={() => {
+            setTurnstileStatus("expired");
+            setTurnstileError("Security check expired. Please verify again.");
+          }}
+          onLoad={() => {
+            setTurnstileStatus("required");
+            setTurnstileError(null);
+          }}
+          onVerify={(token) => {
+            setTurnstileStatus("success");
+            setTurnstileError(null);
+            setTurnstileToken(token);
+          }}
+        />
+        {turnstileError && (
+          <div className="text-red-500 text-sm mt-2" aria-live="polite">
+            {turnstileError}
           </div>
         )}
       </div>
