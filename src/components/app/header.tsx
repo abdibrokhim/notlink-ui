@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { GitFork, LucideStars, Share } from 'lucide-react';
 import { Button } from '../ui/button';
-import ConnectWallet from '@/components/web3/connect-wallet';
+// import ConnectWallet from '@/components/web3/connect-wallet';
 
 export default function Header() {
   const closeAllDropdowns = () => {
@@ -79,7 +79,7 @@ export default function Header() {
             <span className='ml-2 text-xs hidden sm:inline'>Share</span>
           </Button>
         </div>
-        <ConnectWallet />
+        {/* <ConnectWallet /> */}
       </div>
     </header>
   );

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { X, ArrowRightIcon, CopyIcon, ArrowDown } from "lucide-react"
+import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
@@ -168,8 +168,9 @@ export default function Shorten() {
     }
   };
 
-  const handleEncrypt = () => {
-    setEncrypted(false);
+  const handleEncrypt = (val: boolean) => {
+    console.log("Encrypt:", val);
+    setEncrypted(val);
   };
 
   const handleTransactionHash = () => {
@@ -187,7 +188,7 @@ export default function Shorten() {
           <Input
             type="text"
             placeholder="Shorten a URL"
-            className="w-full pl-6 pr-12 py-3 text-lg border-gray-300 rounded-full bg-white outline-none shadow-sm"
+            className="w-full pl-12 pr-12 py-3 text-lg border-gray-200 rounded-full bg-white outline-none shadow-sm"
             value={longURL}
             onChange={handleChange}
             onKeyDown={handleKeyDown} // Add the key down handler
@@ -214,6 +215,18 @@ export default function Shorten() {
               >
               {loading ? loader() :
               <ArrowRightIcon className="h-4 w-4" />}
+            </Button>
+          </div>
+          <div className="absolute left-1 top-1/2 -translate-y-1/2 flex gap-2">
+            <Button 
+              variant="destructive" 
+              size="icon" 
+              className="h-10 w-10"
+              onClick={() => handleEncrypt(!encrypted)}
+              >
+              {encrypted 
+              ? <LockKeyholeIcon className="h-4 w-4" />
+              : <LockKeyholeOpen className="h-4 w-4" />}
             </Button>
           </div>
         </div>
