@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen } from "lucide-react"
+import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
@@ -16,6 +16,7 @@ export default function Shorten() {
   const [loading, setLoading] = useState(false);
   const [longURL, setLongURL] = useState("");
   const [onShorten, setOnShorten] = useState(false);
+  const [onCopy, setOnCopy] = useState(false);
   const onLoadCodeList: string[] = getOnLoadCodeList();
   const shortCode = onLoadCodeList[0];
   const domainName = `https://${process.env.DOMAIN_NAME}`;
@@ -191,7 +192,7 @@ export default function Shorten() {
             className="w-full pl-12 pr-12 py-3 text-lg border-gray-200 rounded-full bg-white outline-none shadow-sm"
             value={longURL}
             onChange={handleChange}
-            onKeyDown={handleKeyDown} // Add the key down handler
+            onKeyDown={handleKeyDown}
           />
           <div className="absolute right-1 top-1/2 -translate-y-1/2 flex gap-2">
             {longURL && (
@@ -266,12 +267,18 @@ export default function Shorten() {
                       variant="default" 
                       size="icon" 
                       className="h-10 w-10"
-                      onClick={() => 
-                        navigator.clipboard.writeText(shortenedURL)
-                      }
+                      onClick={() => {
+                        navigator.clipboard.writeText(shortenedURL);
+                        setOnCopy(true);
+                        setTimeout(() => {
+                          setOnCopy(false);
+                        }, 1000);
+                      }}
                     >
                       {loading ? loader() :
-                        <CopyIcon className="h-4 w-4" />}
+                        onCopy 
+                          ? <CheckCheckIcon className="h-4 w-4" />
+                          : <CopyIcon className="h-4 w-4" />}
                     </Button>
                   </div>
                 </div>
