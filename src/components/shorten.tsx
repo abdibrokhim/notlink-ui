@@ -1,7 +1,7 @@
 "use client"
 
-import React from "react"
-import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon } from "lucide-react"
+import React, { useEffect } from "react"
+import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon, LucideStars } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
@@ -27,6 +27,17 @@ export default function Shorten() {
   const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>("required");
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+
+  useEffect(() => {
+    const starredAt = localStorage.getItem('starredAt');
+    if (starredAt) {
+      const oneDay = 24 * 60 * 60 * 1000;
+      const diff = new Date().getTime() - new Date(starredAt).getTime();
+      if (diff > oneDay) {
+        localStorage.setItem('starRepo', 'false');
+      }
+    }
+  }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let val = e.target.value.trim();
@@ -178,6 +189,14 @@ export default function Shorten() {
     setTransactionHash(null);
   };
 
+  const toggleDropdown = (dropdownId: string) => {
+    if (document.getElementById(dropdownId)?.classList.contains('hidden')) {
+      document.getElementById(dropdownId)?.classList.remove('hidden');
+    } else {
+      document.getElementById(dropdownId)?.classList.add('hidden');
+    }
+  };
+
   return (
     <div className="max-w-2xl w-full space-y-4 px-4 md:px-0">
         <h1 className="text-xl md:text-2xl text-center">
@@ -223,13 +242,55 @@ export default function Shorten() {
               variant="destructive" 
               size="icon" 
               className="h-10 w-10"
-              onClick={() => handleEncrypt(!encrypted)}
+              onClick={() => 
+              {
+                const starRepo = localStorage.getItem('starRepo') === 'true';
+                if (!starRepo) {
+                  toggleDropdown('starDropdownInput');
+                } else {
+                  handleEncrypt(!encrypted);
+                }
+              }
+              }
               >
               {encrypted 
               ? <LockKeyholeIcon className="h-4 w-4" />
               : <LockKeyholeOpen className="h-4 w-4" />}
             </Button>
           </div>
+          <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-gray-300 ring-opacity-100">
+              <div className="p-1 flex flex-col gap-1 items-center">
+                <p className="text-sm">⭐️ Star us on Github ⭐️</p>
+                <div className="flex flex-row gap-2 mt-2">
+                  <Button 
+                    variant="secondary" 
+                    size="icon" 
+                    className="h-9 w-16 text-xs"
+                    onClick={() => {
+                      window.open('https://github.com/abdibrokhim/notlink/', '_blank');
+                    }}
+                  >
+                    <LucideStars className="w-3 h-3" />
+                    <span className='ml-2 text-xs hidden sm:inline'>Star</span>
+                  </Button>
+                  <Button 
+                    variant="secondary" 
+                    size="icon" 
+                    className="h-9 w-16 text-xs"
+                    onClick={() => 
+                    {
+                      localStorage.setItem('starRepo', 'true');
+                      localStorage.setItem('starredAt', new Date().toISOString());
+                      toggleDropdown('starDropdownInput');
+                    }
+                    }
+                  >
+                    <CheckCheckIcon className="w-3 h-3" />
+                    <span className='ml-2 text-xs hidden sm:inline'>Done</span>
+                  </Button>
+                </div>
+              </div>
+            </div>
         </div>
       </div>
 
