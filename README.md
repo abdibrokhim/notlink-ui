@@ -1,6 +1,6 @@
 # notlink-ui
 
-The official web app for [notlink](https://github.com/abdibrokhim/notlink), written in nextjs.
+The official web app for [notlink](https://github.com/abdibrokhim/notlink), written in nextjs and typescript.
 
 Based off of ibrohim's [egov ai agent template](https://github.com/abdibrokhim/egovagent-ui).
 
@@ -19,30 +19,33 @@ The following environment variables can be used to configure notlink ui:
 | `WHICH_NODE_ENV`               | `string` | `development`     | The node environment (development/production).                                       |
 | `DOMAIN_NAME`                  | `string` | `localhost:3000`  | The domain name where the application is hosted.                                    |
 
-
-## Donate & Support
-
-- [Support on Open Collective](https://opencollective.com/opencommunity)
-- [Support on Patreon](https://www.patreon.com/abdibrokhim)
-
-### Crypto
-
-- Bitcoin: bc1qpylxaqwapk0tgdmpnnljj545z4lk2z9q5us6p6
-- Ethereum: 0xb4a8e71d82e8Bf84a02C7770585F9cD8b267aDB9
-- Solana: 4MpPHapcdb5MwRy57juUQ2wUt1EJo8BYqXsYKwSfCvz1
-
-You can also find them here on [my official website](https://imcook.in) (scroll a little down)
-
 ## Contributing
 
-You can just Contribute. Kindly check the [CONTRIBUTING.md](https://github.com/abdibrokhim/notlink-ui/blob/main/CONTRIBUTING.md)
+Contributing is highly encouraged!
+Even if you are not planning to submit any code, joining our [Discord server](https://discord.gg/nUdcd9p8Ae) and providing feedback helps us a lot!
 
-## Community
+Check out our [CONTRIBUTING.md](./CONTRIBUTING.md) and find the appropriate repo above to contribute to.
 
-Join the community on [Discord](https://discord.gg/nUdcd9p8Ae)
+## Open Community
+
+Join the awesome community on [Discord](https://discord.gg/nUdcd9p8Ae)
+
+## Credits
+
+Logo made by Ibrohim Abdivokhidov (@abdibrokhim). Follow him on [LinkedIn](https://www.linkedin.com/in/abdibrokhim/) and/ or [X (twitter)](https://twitter.com/abdibrokhim)
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=abdibrokhim/notlink-ui&type=Date)](https://star-history.com/#abdibrokhim/notlink-ui&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=abdibrokhim/notlink&type=Date)](https://star-history.com/#abdibrokhim/notlink&Date)
 
-Put a star ⭐️
+*⭐ If you find notlink interesting, consider starring this repo to help spread the word.*
+
+## Contributors ✨
+
+Thanks goes to these wonderful people:
+
+<a href="https://github.com/abdibrokhim/notlink/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=abdibrokhim/notlink" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
