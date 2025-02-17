@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image';
 import React, { useEffect } from "react"
 import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon, LucideStars } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -198,7 +199,21 @@ export default function Shorten() {
   };
 
   return (
-    <div className="max-w-2xl w-full space-y-4 px-4 md:px-0">
+    <div className="relative max-w-2xl w-full space-y-4 px-4 md:px-0">
+
+        <a 
+          className="flex mx-auto items-center justify-center absolute -top-[200px] right-0 left-0"
+          href="https://www.producthunt.com/posts/notlink?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-notlink" 
+          target="_blank">
+            <Image 
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=886596&theme=light&t=1739803124250"
+              alt="notlink - open&#0032;source&#0032;blazingly&#0032;fast&#0032;url&#0032;shortener&#0032;ever | Product Hunt"
+              width={200}
+              height={44}
+              className='mx-auto cursor-pointer'
+            />
+        </a>
+
         <h1 className="text-xl md:text-2xl text-center">
           a new kind of url shortener
         </h1>
