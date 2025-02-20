@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       token: turnstileToken,
       secretKey: process.env.TURNSTILE_SECRET_KEY!,
       // Optional: Add an idempotency key to prevent token reuse
-      idempotencyKey: v4(),
+      // idempotencyKey: v4(),
       sandbox: process.env.WHICH_NODE_ENV === "development",
     });
   
