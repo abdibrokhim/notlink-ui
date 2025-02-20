@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { ShortURLResponse } from '@/components/types';
 import { validateTurnstileToken } from "next-turnstile";
-import { v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
   try {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       token: turnstileToken,
       secretKey: process.env.TURNSTILE_SECRET_KEY!,
       // Optional: Add an idempotency key to prevent token reuse
-      // idempotencyKey: v4(),
+      idempotencyKey: uuidv4(),
       sandbox: process.env.WHICH_NODE_ENV === "development",
     });
   
