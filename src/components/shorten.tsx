@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon, LucideStars } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -28,6 +28,9 @@ export default function Shorten() {
   const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>("required");
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+  
+  // Add a ref to the Turnstile component
+  const turnstileRef = useRef<any>(null);
 
   useEffect(() => {
     const starredAt = localStorage.getItem('starredAt');
@@ -164,10 +167,19 @@ export default function Shorten() {
       const data: ShortURLResponse = await response.json();
       console.log('Response', data);
       setShortenedURL(`${domainName}/${data.short_code}`);
+      // Reset Turnstile after successful submission
+      turnstileRef.current?.reset();
+      setTurnstileToken("");
+      setTurnstileStatus("required");
     } catch (error) {
       console.error('Error:', error);
-    } 
-    setLoading(false);
+    } finally {
+      setLoading(false);
+      // Ensure Turnstile is reset even if there's an error
+      turnstileRef.current?.reset();
+      setTurnstileToken("");
+      setTurnstileStatus("required");
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -373,10 +385,12 @@ export default function Shorten() {
           onError={() => {
             setTurnstileStatus("error");
             setTurnstileError("Security check failed. Please try again.");
+            setTurnstileToken(""); // Clear expired token
           }}
           onExpire={() => {
             setTurnstileStatus("expired");
             setTurnstileError("Security check expired. Please verify again.");
+            setTurnstileToken(""); // Clear expired token
           }}
           onLoad={() => {
             setTurnstileStatus("required");
