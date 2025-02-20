@@ -28,6 +28,7 @@ export default function Shorten() {
   const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>("required");
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
+  const [turnstileKey, setTurnstileKey] = useState(Date.now());
   
   // Add a ref to the Turnstile component
   const turnstileRef = useRef<any>(null);
@@ -168,17 +169,17 @@ export default function Shorten() {
       console.log('Response', data);
       setShortenedURL(`${domainName}/${data.short_code}`);
       // Reset Turnstile after successful submission
-      // turnstileRef.current?.reset();
-      // setTurnstileToken("");
-      // setTurnstileStatus("required");
+      turnstileRef.current?.reset();
+      setTurnstileToken("");
+      setTurnstileStatus("required");
     } catch (error) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
       // Ensure Turnstile is reset even if there's an error
-      // turnstileRef.current?.reset();
-      // setTurnstileToken("");
-      // setTurnstileStatus("required");
+      turnstileRef.current?.reset();
+      setTurnstileToken("");
+      setTurnstileStatus("required");
     }
   };
 
@@ -378,6 +379,7 @@ export default function Shorten() {
 
       <div className="mt-4 text-center">
         <Turnstile
+          key={turnstileKey}
           siteKey={process.env.TURNSTILE_SITE_KEY!}
           retry="auto"
           refreshExpired="auto"
