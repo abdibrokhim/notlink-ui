@@ -31,7 +31,7 @@ export default function Shorten() {
   const [turnstileKey, setTurnstileKey] = useState(Date.now());
   
   // Add a ref to the Turnstile component
-  const turnstileRef = useRef<any>(null);
+  // const turnstileRef = useRef<any>(null);
 
   useEffect(() => {
     const starredAt = localStorage.getItem('starredAt');
@@ -169,7 +169,8 @@ export default function Shorten() {
       console.log('Response', data);
       setShortenedURL(`${domainName}/${data.short_code}`);
       // Reset Turnstile after successful submission
-      turnstileRef.current?.reset();
+      // After each submission, update the key to force a remount:
+      setTurnstileKey(Date.now());
       setTurnstileToken("");
       setTurnstileStatus("required");
     } catch (error) {
@@ -177,7 +178,8 @@ export default function Shorten() {
     } finally {
       setLoading(false);
       // Ensure Turnstile is reset even if there's an error
-      turnstileRef.current?.reset();
+      // After each submission, update the key to force a remount:
+      setTurnstileKey(Date.now());
       setTurnstileToken("");
       setTurnstileStatus("required");
     }
