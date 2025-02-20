@@ -168,17 +168,17 @@ export default function Shorten() {
       console.log('Response', data);
       setShortenedURL(`${domainName}/${data.short_code}`);
       // Reset Turnstile after successful submission
-      turnstileRef.current?.reset();
-      setTurnstileToken("");
-      setTurnstileStatus("required");
+      // turnstileRef.current?.reset();
+      // setTurnstileToken("");
+      // setTurnstileStatus("required");
     } catch (error) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
       // Ensure Turnstile is reset even if there's an error
-      turnstileRef.current?.reset();
-      setTurnstileToken("");
-      setTurnstileStatus("required");
+      // turnstileRef.current?.reset();
+      // setTurnstileToken("");
+      // setTurnstileStatus("required");
     }
   };
 
