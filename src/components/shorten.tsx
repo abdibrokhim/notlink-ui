@@ -235,7 +235,7 @@ export default function Shorten() {
           <Input
             type="text"
             placeholder="Shorten a URL"
-            className="w-full pl-12 pr-12 py-3 text-lg border-gray-200 rounded-full bg-white outline-none shadow-sm"
+            className="w-full pl-12 pr-12 py-3 text-lg border-[var(--secondary-accent)] rounded-full bg-white outline-none shadow-sm"
             value={longURL}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
@@ -285,25 +285,23 @@ export default function Shorten() {
               : <LockKeyholeOpen className="h-4 w-4" />}
             </Button>
           </div>
-          <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-gray-300 ring-opacity-100">
-              <div className="p-1 flex flex-col gap-1 items-center">
-                <p className="text-sm">⭐️ Star us on Github ⭐️</p>
-                <div className="flex flex-row gap-2 mt-2">
+          <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100">
+              <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
+                <p className="text-sm font-medium">click star then done</p>
+                <div className="flex flex-col gap-1 mt-2 w-full">
                   <Button 
                     variant="secondary" 
-                    size="icon" 
-                    className="h-9 w-16 text-xs"
+                    className="h-8 w-full text-xs"
                     onClick={() => {
                       window.open('https://github.com/abdibrokhim/notlink/', '_blank');
                     }}
                   >
                     <LucideStars className="w-3 h-3" />
-                    <span className='ml-2 text-xs hidden sm:inline'>Star</span>
+                    <span className='ml-2 text-xs inline'>Star</span>
                   </Button>
                   <Button 
                     variant="secondary" 
-                    size="icon" 
-                    className="h-9 w-16 text-xs"
+                    className="h-8 w-full text-xs"
                     onClick={() => 
                     {
                       localStorage.setItem('starRepo', 'true');
@@ -313,7 +311,7 @@ export default function Shorten() {
                     }
                   >
                     <CheckCheckIcon className="w-3 h-3" />
-                    <span className='ml-2 text-xs hidden sm:inline'>Done</span>
+                    <span className='ml-2 text-xs inline'>Done</span>
                   </Button>
                 </div>
               </div>
@@ -347,10 +345,10 @@ export default function Shorten() {
                     type="text"
                     value={`${domainName}/${displayedCode}`}
                     readOnly
-                    className="w-full pl-6 pr-12 py-3 text-sm border-gray-300 rounded-full bg-white outline-none shadow-sm"
+                    className="w-full pl-6 pr-12 py-3 text-sm border-[var(--secondary-accent)] rounded-full bg-white outline-none shadow-sm"
                   />
                 ) : (
-                  <div className="w-full pl-6 pr-12 py-3 text-sm border-gray-300 rounded-full bg-white shadow-sm">
+                  <div className="w-full pl-6 pr-12 py-3 text-sm border-[var(--secondary-accent)] rounded-full bg-white shadow-sm">
                     {domainName}/<AnimatedShortCode finalCode={displayedCode} />
                   </div>
                 )}

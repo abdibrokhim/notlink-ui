@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default: "bg-[#44403C] text-[#FFFFFF] shadow hover:bg-[#44403C]/90",
         destructive: "bg-[#FFFFFF] text-[#131418] hover:bg-[#f9fafb]/90",
         outline: "bg-white px-2 py-1 sm:px-2 sm:py-2 rounded-md sm:rounded-lg bg-opacity-50 mr-2 border border-stone-200 text-xs sm:text-sm w-auto whitespace-nowrap flex-shrink-0 cursor-pointer hover:bg-opacity-100 hover:border-stone-300 active:bg-opacity-70 transition-all duration-100 select-none",
-        secondary: "rounded-md text-[#FFFFFF] shadow bg-[#131418]/90 hover:bg-[#131418]",
+        secondary: "rounded-md text-[#FFFFFF] shadow bg-[#44403C]/90 hover:bg-[#44403C]",
         ghost: "bg-transparent",
         link: "text-primary underline-offset-4 hover:underline",
       },

@@ -1,5 +1,8 @@
 this file is just to track the changes. and remind me that i am not boredape. [lmao](https://yaps.gg).
 
+### update 24rd february 2025
+- ui fully updates with new color palette. it's more cool now!
+
 ### update 23rd february 2025
 - added short code animation. now while the actual short code is being generated, the random short code characters (numbers and english letters) will be rolling like a casino slot machine. also on display the actual short code there is a nice smooth appearing animation.
 
