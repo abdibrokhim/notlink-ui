@@ -61,7 +61,7 @@ export default function Header() {
       </div>
       <div 
         id="menuDropdown"
-        className="absolute right-4 sm:right-[24px] mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10"
+        className="hidden absolute right-4 sm:right-[24px] mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10"
       >
         <div className="p-2 space-y-2">
           <div className="flex gap-2 items-center justify-between w-full rounded-md">

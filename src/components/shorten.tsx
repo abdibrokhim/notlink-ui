@@ -232,6 +232,23 @@ export default function Shorten() {
       <div className="">
 
         <div className="relative max-w-2xl">
+          {/* <div className="relative"> */}
+            {/* Animated long URL display as a background overlay */}
+            {/* <div className="absolute inset-0 flex items-center pl-12 pr-12 text-lg text-gray-700 pointer-events-none bg-white rounded-full border border-[var(--secondary-accent)] shadow-sm overflow-hidden">
+              <div className="whitespace-nowrap overflow-x-auto">
+                <AnimatedShortCode finalCode={longURL} />
+              </div>
+            </div> */}
+            {/* Transparent input over the animated text */}
+            {/* <Input
+              type="text"
+              placeholder="Shorten a URL"
+              className="w-full pl-12 pr-12 py-3 text-lg border-[var(--secondary-accent)] rounded-full bg-transparent outline-none shadow-sm relative"
+              value={longURL}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+            /> */}
+          {/* </div> */}
           <Input
             type="text"
             placeholder="Shorten a URL"
@@ -243,7 +260,7 @@ export default function Shorten() {
           <div className="absolute right-1 top-1/2 -translate-y-1/2 flex gap-2">
             {longURL && (
               <Button
-                variant="ghost"
+                variant="link"
                 size="icon"
                 className="h-10 w-10 text-stone-400 hover:text-stone-600 focus:outline-none flex items-center justify-center"
                 onClick={
@@ -348,7 +365,7 @@ export default function Shorten() {
                     className="w-full pl-6 pr-12 py-3 text-sm border-[var(--secondary-accent)] rounded-full bg-white outline-none shadow-sm"
                   />
                 ) : (
-                  <div className="w-full pl-6 pr-12 py-3 text-sm border-[var(--secondary-accent)] rounded-full bg-white shadow-sm">
+                  <div className="flex h-12 border border-[var(--secondary-accent)] bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-sm md:placeholder:text-md placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 outline-none w-full pl-6 pr-12 py-3 rounded-full bg-white">
                     {domainName}/<AnimatedShortCode finalCode={displayedCode} />
                   </div>
                 )}
