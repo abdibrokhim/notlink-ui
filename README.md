@@ -26,6 +26,8 @@ Even if you are not planning to submit any code, joining our [Discord server](ht
 
 Check out our [CONTRIBUTING.md](./CONTRIBUTING.md) and find the appropriate repo above to contribute to.
 
+Check out [CHANGELOG.md](./CHANGELOG.md) for the latest changes/ updates.
+
 ## Open Community
 
 Join the awesome community on [Discord](https://discord.gg/nUdcd9p8Ae)

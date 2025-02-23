@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { loader } from "@/lib/getLoader"
-import { getOnLoadCodeList } from "@/lib/getOnLoadCodeList"
 import { ShortURLResponse, WalletResponse } from "./types"
 import { Turnstile } from "next-turnstile";
+import { rollShortCodeAnimation, AnimatedShortCode } from "@/components/code-anima";
 
 type TurnstileStatus = "required" | "success" | "error" | "expired";
 
@@ -18,8 +18,6 @@ export default function Shorten() {
   const [longURL, setLongURL] = useState("");
   const [onShorten, setOnShorten] = useState(false);
   const [onCopy, setOnCopy] = useState(false);
-  const onLoadCodeList: string[] = getOnLoadCodeList();
-  const shortCode = onLoadCodeList[0];
   const domainName = `https://${process.env.DOMAIN_NAME}`;
   const [shortenedURL, setShortenedURL] = useState<string | null>(null);
   const [encrypted, setEncrypted] = useState<boolean>(false);
@@ -29,9 +27,10 @@ export default function Shorten() {
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
   const [turnstileKey, setTurnstileKey] = useState(Date.now());
-  
-  // Add a ref to the Turnstile component
-  // const turnstileRef = useRef<any>(null);
+
+  const initialCode = "------";
+  const [displayedCode, setDisplayedCode] = useState(initialCode);
+  const animationControllerRef = useRef<{ stop: () => void } | null>(null);
 
   useEffect(() => {
     const starredAt = localStorage.getItem('starredAt');
@@ -152,6 +151,8 @@ export default function Shorten() {
     setOnShorten(true);
     setLoading(true);
 
+    animationControllerRef.current = rollShortCodeAnimation(setDisplayedCode, 200, 0.9, 50);
+
     try {
       const response = await fetch(`/api/shorten`, {
         method: 'POST',
@@ -167,9 +168,14 @@ export default function Shorten() {
       });
       const data: ShortURLResponse = await response.json();
       console.log('Response', data);
+
+      if (animationControllerRef.current) {
+        animationControllerRef.current.stop();
+        animationControllerRef.current = null;
+      }
+
       setShortenedURL(`${domainName}/${data.short_code}`);
-      // Reset Turnstile after successful submission
-      // After each submission, update the key to force a remount:
+      
       setTurnstileKey(Date.now());
       setTurnstileToken("");
       setTurnstileStatus("required");
@@ -177,8 +183,12 @@ export default function Shorten() {
       console.error('Error:', error);
     } finally {
       setLoading(false);
-      // Ensure Turnstile is reset even if there's an error
-      // After each submission, update the key to force a remount:
+
+      if (animationControllerRef.current) {
+        animationControllerRef.current.stop();
+        animationControllerRef.current = null;
+      }
+
       setTurnstileKey(Date.now());
       setTurnstileToken("");
       setTurnstileStatus("required");
@@ -325,42 +335,46 @@ export default function Shorten() {
                     className="h-10 w-10 cursor-text"
                     onClick={() => {}}
                   >
-                    {loading ? loader() :
-                      <ArrowDown className="h-4 w-4" />}
+                    <ArrowDown className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             </div>
             <div className="">
-              {shortenedURL && (
-                <div className="relative max-w-xs mx-auto">
+              <div className="relative max-w-xs mx-auto">
+                {loading ? (
                   <Input
                     type="text"
-                    value={shortenedURL}
+                    value={`${domainName}/${displayedCode}`}
                     readOnly
                     className="w-full pl-6 pr-12 py-3 text-sm border-gray-300 rounded-full bg-white outline-none shadow-sm"
                   />
-                  <div className="absolute right-1 top-1/2 -translate-y-1/2 flex gap-2">
-                    <Button 
-                      variant="default" 
-                      size="icon" 
-                      className="h-10 w-10"
-                      onClick={() => {
+                ) : (
+                  <div className="w-full pl-6 pr-12 py-3 text-sm border-gray-300 rounded-full bg-white shadow-sm">
+                    {domainName}/<AnimatedShortCode finalCode={displayedCode} />
+                  </div>
+                )}
+                <div className="absolute right-1 top-1/2 -translate-y-1/2 flex gap-2">
+                  <Button 
+                    variant="default" 
+                    size="icon" 
+                    className="h-10 w-10"
+                    onClick={() => {
+                      if (!loading && shortenedURL) {
                         navigator.clipboard.writeText(shortenedURL);
                         setOnCopy(true);
-                        setTimeout(() => {
-                          setOnCopy(false);
-                        }, 1000);
-                      }}
-                    >
-                      {loading ? loader() :
-                        onCopy 
-                          ? <CheckCheckIcon className="h-4 w-4" />
-                          : <CopyIcon className="h-4 w-4" />}
-                    </Button>
-                  </div>
+                        setTimeout(() => setOnCopy(false), 1000);
+                      }
+                    }}
+                    disabled={loading || !shortenedURL}
+                  >
+                    {onCopy 
+                      ? <CheckCheckIcon className="h-4 w-4" />
+                      : <CopyIcon className="h-4 w-4" />
+                    }
+                  </Button>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         )}
