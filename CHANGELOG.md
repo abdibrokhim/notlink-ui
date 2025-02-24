@@ -1,6 +1,7 @@
 this file is just to track the changes. and remind me that i am not boredape. [lmao](https://yaps.gg).
 
 ### update 24rd february 2025
+- added colorful finest particles on mousemove.
 - ui fully updates with new color palette. it's more cool now!
 
 ### update 23rd february 2025

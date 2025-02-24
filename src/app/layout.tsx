@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Script from 'next/script';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./styles.css";
 import { ThirdwebProvider } from "thirdweb/react";
 
 const geistSans = Geist({
@@ -56,6 +58,8 @@ export default function RootLayout({
         <ThirdwebProvider>
         {children}
         </ThirdwebProvider>
+        <div id="cursor-particles"></div>
+        <Script src="/scripts.js" strategy="afterInteractive" />
       </body>
     </html>
   );

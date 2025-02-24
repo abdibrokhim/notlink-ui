@@ -302,7 +302,7 @@ export default function Shorten() {
               : <LockKeyholeOpen className="h-4 w-4" />}
             </Button>
           </div>
-          <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100">
+          <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10">
               <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
                 <p className="text-sm font-medium">click star then done</p>
                 <div className="flex flex-col gap-1 mt-2 w-full">

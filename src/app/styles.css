@@ -1,0 +1,38 @@
+#cursor-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 100%;
+  background-color: var(--start-color, red); /* Default red if no --start-color */
+  opacity: 1; /* Start visible */
+  animation: fadeOut 0.3s linear forwards; /* Default for mousemove */
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1.5);
+  }
+}
+
+@keyframes fountain {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+    background-color: var(--start-color);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--vx), var(--vy));
+    background-color: var(--end-color);
+  }
+}
