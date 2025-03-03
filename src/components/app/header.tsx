@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { GitFork, LucideStars, Share, Menu, ExternalLinkIcon } from 'lucide-react';
+import { GitFork, LucideStars, Share, Menu, ExternalLinkIcon, Mail, CoffeeIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 
 export default function Header() {
@@ -84,31 +84,47 @@ export default function Header() {
           </div>
           <div className="flex flex-col mt-2 gap-1">
             {links[activeTab].map((item: any) => (
-              <div
+              <a
                 key={item.label}
+                href={item.url}
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center justify-between block px-4 py-1 text-sm text-black hover:text-white hover:bg-[#44403C]/90 rounded-md transition duration-200 transform hover:scale-102"
               >
-                <a href={item.url} target="_blank" rel="noreferrer">
-                  {item.label}
-                </a>
+                <span>{item.label}</span>
                 <ExternalLinkIcon className="w-3 h-3" />
-              </div>
+              </a>
             ))}
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
-          <div>
-            <Button 
-              onClick={() => {
-                const text = `try notl.ink - blazingly fast url shortener ever!!`;
-                window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank');
-              }}
-              variant="secondary"
-              size="sm"
-              className="w-full justify-center"
-            >
-              <Share className="w-3 h-3" />
-              <span className="ml-2 text-sm">Share</span>
-            </Button>
+          <div className='flex items-center justify-between w-full'>
+            <div>
+              <Button 
+                onClick={() => {
+                  const text = `try notl.ink - blazingly fast url shortener ever!!`;
+                  window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank');
+                }}
+                variant="outline"
+                size="sm"
+                className="w-full justify-center"
+              >
+                <Share className="w-3 h-3" />
+                <span className="ml-2 text-sm">Share</span>
+              </Button>
+            </div>
+            <div>
+              <Button 
+                onClick={() => {
+                  window.open(`https://opencollective.com/opencommunity`, '_blank');
+                }}
+                variant="outline"
+                size="sm"
+                className="w-full justify-center"
+              >
+                <CoffeeIcon className="w-3 h-3" />
+                <span className="ml-2 text-sm">Donate</span>
+              </Button>
+            </div>
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
           <div className=''>
@@ -120,7 +136,7 @@ export default function Header() {
                 <Image 
                   src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=886596&theme=light&t=1739803124250"
                   alt="notlink - open&#0032;source&#0032;blazingly&#0032;fast&#0032;url&#0032;shortener&#0032;ever | Product Hunt"
-                  width={150}
+                  width={170}
                   height={30}
                   className='mx-auto cursor-pointer'
                 />
@@ -135,11 +151,28 @@ export default function Header() {
                 <Image 
                   src="https://api.producthunt.com/widgets/embed-image/v1/product_rating.svg?product_id=992403&theme=light" 
                   alt="notlink - open&#0032;source&#0032;blazingly&#0032;fast&#0032;url&#0032;shortener&#0032;ever | Product Hunt" 
-                  width={150}
+                  width={170}
                   height={30}
                   className='mx-auto cursor-pointer'
                 />
             </a>
+          </div>
+          <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
+          <div className='flex items-center justify-between w-full'>
+            <div className='text-md'>Enterprise?</div>
+            <div>
+              <Button
+                onClick={() => {
+                  window.location.href = 'mailto:abdibrokhim@gmail.com?subject=Enterprise%20Inquiry%20for%20notlink';
+                }}
+                variant="secondary" 
+                size="sm"
+                className="w-full justify-center"
+              >
+                <Mail className="w-3 h-3" />
+                <span className="ml-2 text-sm">Contact</span>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

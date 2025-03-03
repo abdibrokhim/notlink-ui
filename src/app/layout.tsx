@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Head from "next/head";
+import React from "react";
 import Script from 'next/script';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -17,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "this is notlink - a new kind of url shortener",
-  description: "this is notlink - a new kind of url shortener",
+  description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
   metadataBase: new URL("https://notl.ink/"),
   keywords: ["url shortener", "free url shortener", "open-source url shortener", "open-source"],
   alternates: {
@@ -31,17 +33,27 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "this is notlink - a new kind of url shortener",
-    description: "this is notlink - a new kind of url shortener",
+    description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
     type: "website",
     url: "/",
+    siteName: "notlink",
     images: [
       {
         url: "/assets/notlink-logo.png",
         width: 1200,
         height: 630,
-        alt: "OG Image",
+        alt: "notlink logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "this is notlink - a new kind of url shortener",
+    description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
+    images: ["/assets/notlink-logo.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -52,6 +64,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
