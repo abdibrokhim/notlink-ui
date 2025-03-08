@@ -44,7 +44,7 @@ function ThemeSwitch() {
 
 export default function Footer() {
   return (
-    <div className="mt-16 border-t border-[var(--secondary-accent)] px-4 sm:px-[24px] py-[10px]">
+    <div className="border-t border-[var(--secondary-accent)] px-4 sm:px-[24px] py-[10px] fixed bottom-0 w-full">
       <div className="flex items-center justify-between">
         <a className='text-[10px] text-black/50 hover:underline' href="https://yaps.gg" target="_blank" rel='noreferrer noopener'>
             <span>© 2024 YAPS WORLD</span>
