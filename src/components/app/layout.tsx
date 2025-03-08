@@ -10,10 +10,12 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen w-full flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center">{children}</main>
-      <Footer />
+      <main className="flex-1 flex items-center justify-center relative mx-auto w-full max-w-screen-sm">
+        {children}
+      </main>
+        <Footer />
     </div>
   );
 }

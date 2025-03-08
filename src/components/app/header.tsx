@@ -97,7 +97,7 @@ export default function Header() {
             ))}
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
-          <div className='flex items-center justify-between w-full'>
+          <div className='flex space-x-1 items-center justify-between w-full'>
             <div>
               <Button 
                 onClick={() => {
@@ -106,7 +106,7 @@ export default function Header() {
                 }}
                 variant="outline"
                 size="sm"
-                className="w-full justify-center"
+                className="w-full justify-center mr-0"
               >
                 <Share className="w-3 h-3" />
                 <span className="ml-2 text-sm">Share</span>
@@ -119,7 +119,7 @@ export default function Header() {
                 }}
                 variant="outline"
                 size="sm"
-                className="w-full justify-center"
+                className="w-full justify-center mr-0"
               >
                 <CoffeeIcon className="w-3 h-3" />
                 <span className="ml-2 text-sm">Donate</span>

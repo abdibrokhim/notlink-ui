@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "this is notlink - a new kind of url shortener",
-  description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
+  title: "notl[dot]ink - free open source blazingly fast url shortener ever",
+  description: "notl[dot]ink is a free, open-source blazingly url shortener that lets you create short, shareable links easily and quickly. Super clean ui/ux, no ads, no tracking, no cookies, no bullshit.",
   metadataBase: new URL("https://notl.ink/"),
   keywords: ["url shortener", "free url shortener", "open-source url shortener", "open-source"],
   alternates: {
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     },
   ],
   openGraph: {
-    title: "this is notlink - a new kind of url shortener",
-    description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
+    title: "notl[dot]ink - free open source blazingly fast url shortener ever",
+    description: "notl[dot]ink is a free, open-source blazingly url shortener that lets you create short, shareable links easily and quickly. Super clean ui/ux, no ads, no tracking, no cookies, no bullshit.",
     type: "website",
     url: "/",
     siteName: "notlink",
@@ -42,14 +42,14 @@ export const metadata: Metadata = {
         url: "/assets/notlink-logo.png",
         width: 1200,
         height: 630,
-        alt: "notlink logo",
+        alt: "notlink official logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "this is notlink - a new kind of url shortener",
-    description: "notlink is a free, open-source URL shortener that lets you create short, shareable links easily and quickly.",
+    title: "notl[dot]ink - free open source blazingly fast url shortener ever",
+    description: "notl[dot]ink is a free, open-source blazingly url shortener that lets you create short, shareable links easily and quickly. Super clean ui/ux, no ads, no tracking, no cookies, no bullshit.",
     images: ["/assets/notlink-logo.png"],
   },
   icons: {
@@ -63,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
