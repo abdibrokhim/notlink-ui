@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "notlink",
     images: [
       {
-        url: "/assets/notlink-logo.png",
+        url: "/assets/notlink.png",
         width: 1200,
         height: 630,
         alt: "notlink official logo",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "notl[dot]ink - free open source blazingly fast url shortener ever",
     description: "notl[dot]ink is a free, open-source blazingly url shortener that lets you create short, shareable links easily and quickly. Super clean ui/ux, no ads, no tracking, no cookies, no bullshit.",
-    images: ["/assets/notlink-logo.png"],
+    images: ["/assets/notlink.png"],
   },
   icons: {
     icon: "/favicon.ico",

@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { GitFork, LucideStars, Share, Menu, ExternalLinkIcon, Mail, CoffeeIcon } from 'lucide-react';
+import { GitFork, LucideStars, Share, Menu, ExternalLinkIcon, CoffeeIcon, MailIcon } from 'lucide-react';
 import { Button } from '../ui/button';
+import { SUBSCRIPTION } from '@/lib/constants';
 
 export default function Header() {
   const closeAllDropdowns = () => {
@@ -40,20 +41,20 @@ export default function Header() {
   };
 
   return (
-    <header className="border-b border-[var(--secondary-accent)] px-4 sm:px-[24px] py-[10px] relative">
+    <header className="border-b border-[var(--secondary-accent)] px-4 sm:px-[24px] py-[10px] relative top-0 sticky z-50">
       <div className="mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <Link href="https://yaps.gg" className="flex items-center space-x-1" target="_blank" rel="noreferrer">
-            <Image src="/assets/oc-logo.svg" alt="oc" width={34} height={34} className="rounded-full" />
+            <Image src="/assets/yapsdotgg.svg" alt="yapsdotgg" width={34} height={34} className="rounded-full" />
           </Link>
           <Image src="/assets/slash.svg" alt="slash" width={22} height={22} className="w-[12px] h-[22px]" />
           <Link href="/" className="flex items-center space-x-1">
-            <Image src="/assets/notlink-logo.svg" alt="notlink" width={34} height={34} className="rounded-full" />
+            <Image src="/assets/notlink.svg" alt="notlink" width={34} height={34} className="rounded-full" />
           </Link>
         </div>
         <div className="flex gap-2">
           <div className="">
-            <Button onClick={toggleMobileMenu} variant="secondary" className="shrink-0">
+            <Button onClick={toggleMobileMenu} variant="secondary" className="">
               <Menu className="w-4 h-4" />
             </Button>
           </div>
@@ -71,7 +72,7 @@ export default function Header() {
                 onClick={() => setActiveTab(tab)}
                 variant="ghost"
                 size="sm"
-                className={`w-full font-medium text-sm px-4 py-1 rounded-md transition duration-200 transform ${
+                className={`w-1/2 font-medium text-sm px-4 py-1 rounded-md transition duration-200 transform ${
                   activeTab === tab
                     ? 'text-white bg-[#44403C]/90 scale-105'
                     : 'text-black scale-100'
@@ -97,34 +98,30 @@ export default function Header() {
             ))}
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
-          <div className='flex space-x-1 items-center justify-between w-full'>
-            <div>
-              <Button 
-                onClick={() => {
-                  const text = `try notl.ink - blazingly fast url shortener ever!!`;
-                  window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank');
-                }}
-                variant="outline"
-                size="sm"
-                className="w-full justify-center mr-0"
-              >
-                <Share className="w-3 h-3" />
-                <span className="ml-2 text-sm">Share</span>
-              </Button>
-            </div>
-            <div>
-              <Button 
-                onClick={() => {
-                  window.open(`https://opencollective.com/opencommunity`, '_blank');
-                }}
-                variant="outline"
-                size="sm"
-                className="w-full justify-center mr-0"
-              >
-                <CoffeeIcon className="w-3 h-3" />
-                <span className="ml-2 text-sm">Donate</span>
-              </Button>
-            </div>
+          <div className='flex flex-row space-x-1 items-center justify-between w-full'>
+            <Button 
+              onClick={() => {
+                const text = `try notl.ink - blazingly fast url shortener ever!!`;
+                window.open(`https://x.com/intent/post?text=${encodeURIComponent(text)}`, '_blank');
+              }}
+              variant="outline"
+              size="sm"
+              className="justify-center mr-0 w-1/2"
+            >
+              <Share className="w-3 h-3" />
+              <span className="ml-2 text-sm">Share</span>
+            </Button>
+            <Button 
+              onClick={() => {
+                window.open(`https://opencollective.com/opencommunity`, '_blank');
+              }}
+              variant="outline"
+              size="sm"
+              className="justify-center mr-0 w-1/2"
+            >
+              <CoffeeIcon className="w-3 h-3" />
+              <span className="ml-2 text-sm">Donate</span>
+            </Button>
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
           <div className=''>
@@ -158,21 +155,19 @@ export default function Header() {
             </a>
           </div>
           <div className='h-[.5px] bg-[var(--secondary-darkest)]'></div>
-          <div className='flex items-center justify-between w-full'>
-            <div className='text-md'>Enterprise?</div>
-            <div>
-              <Button
-                onClick={() => {
-                  window.location.href = 'mailto:abdibrokhim@gmail.com?subject=Enterprise%20Inquiry%20for%20notlink';
-                }}
-                variant="secondary" 
-                size="sm"
-                className="w-full justify-center"
-              >
-                <Mail className="w-3 h-3" />
-                <span className="ml-2 text-sm">Contact</span>
-              </Button>
-            </div>
+          <div className='flex flex-row space-x-1 items-center justify-between w-full'>
+            <div className='text-sm w-1/2'>Enterprise?</div>
+            <Button
+              onClick={() => {
+                window.open('mailto:abdibrokhim@gmail.com?subject=Enterprise%20Inquiry', '_blank')
+              }}
+              variant="secondary" 
+              size="sm"
+              className="w-1/2 justify-center"
+            >
+              <MailIcon className="w-3 h-3 text-white" />
+              <span className="ml-2 text-sm">Contact</span>
+            </Button>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useEffect, useRef } from "react"
-import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon, LucideStars } from "lucide-react"
+import { X, ArrowRightIcon, CopyIcon, ArrowDown, LockKeyholeIcon, LockKeyholeOpen, CheckCheckIcon, LucideStars, SparklesIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
@@ -10,6 +10,7 @@ import { loader } from "@/lib/getLoader"
 import { ShortURLResponse, WalletResponse } from "./types"
 import { Turnstile } from "next-turnstile";
 import { rollShortCodeAnimation, AnimatedShortCode } from "@/components/code-anima";
+import { SUBSCRIPTION } from '@/lib/constants';
 
 type TurnstileStatus = "required" | "success" | "error" | "expired";
 
@@ -288,12 +289,12 @@ export default function Shorten() {
               className="h-10 w-10"
               onClick={() => 
               {
-                const starRepo = localStorage.getItem('starRepo') === 'true';
-                if (!starRepo) {
-                  toggleDropdown('starDropdownInput');
-                } else {
-                  handleEncrypt(!encrypted);
-                }
+                // const starRepo = localStorage.getItem('starRepo') === 'true';
+                // if (!starRepo) {
+                  toggleDropdown('subDropdown');
+                // } else {
+                  // handleEncrypt(!encrypted);
+                // }
               }
               }
               >
@@ -302,37 +303,58 @@ export default function Shorten() {
               : <LockKeyholeOpen className="h-4 w-4" />}
             </Button>
           </div>
+          {/* star repo dropdown */}
           <div id="starDropdownInput" className="hidden absolute left-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10">
-              <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
-                <p className="text-sm font-medium">click <span className='underline'>star</span> then <span className='underline'>done</span></p>
-                <div className="flex flex-col gap-1 mt-2 w-full">
-                  <Button 
-                    variant="secondary" 
-                    className="h-8 w-full text-xs"
-                    onClick={() => {
-                      window.open('https://github.com/abdibrokhim/notlink/', '_blank');
-                    }}
-                  >
-                    <LucideStars className="w-3 h-3" />
-                    <span className='ml-2 text-xs inline'>Star</span>
-                  </Button>
-                  <Button 
-                    variant="secondary" 
-                    className="h-8 w-full text-xs"
-                    onClick={() => 
-                    {
-                      localStorage.setItem('starRepo', 'true');
-                      localStorage.setItem('starredAt', new Date().toISOString());
-                      toggleDropdown('starDropdownInput');
-                    }
-                    }
-                  >
-                    <CheckCheckIcon className="w-3 h-3" />
-                    <span className='ml-2 text-xs inline'>Done</span>
-                  </Button>
-                </div>
+            <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
+              <p className="text-sm font-medium">click <span className='underline'>star</span> then <span className='underline'>done</span></p>
+              <div className="flex flex-col gap-1 mt-2 w-full">
+                <Button 
+                  variant="secondary" 
+                  className="h-8 w-full text-xs"
+                  onClick={() => {
+                    window.open('https://github.com/abdibrokhim/notlink/', '_blank');
+                  }}
+                >
+                  <LucideStars className="w-3 h-3" />
+                  <span className='ml-2 text-xs inline'>Star</span>
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  className="h-8 w-full text-xs"
+                  onClick={() => 
+                  {
+                    localStorage.setItem('starRepo', 'true');
+                    localStorage.setItem('starredAt', new Date().toISOString());
+                    toggleDropdown('starDropdownInput');
+                  }
+                  }
+                >
+                  <CheckCheckIcon className="w-3 h-3" />
+                  <span className='ml-2 text-xs inline'>Done</span>
+                </Button>
               </div>
             </div>
+          </div>
+          {/* Subscription */}
+          <div id="subDropdown" className="hidden absolute left-0 mt-2 w-28 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10">
+            <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
+              <p className="text-xs font-medium">upgrade to pro</p>
+              <div className="flex flex-col gap-1 mt-2 w-full">
+                <Button 
+                  variant="secondary" 
+                  size="icon"
+                  className="h-8 w-full text-xs"
+                  onClick={() => {
+                    window.open(SUBSCRIPTION, '_blank')
+                  }}
+                >
+                  <SparklesIcon className="w-3 h-3" />
+                  <span className='mx-2 text-xs inline'>Pro</span>
+                  <SparklesIcon className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

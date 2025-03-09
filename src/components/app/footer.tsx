@@ -4,6 +4,7 @@ import { MoonStar, SparklesIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
+import { SUBSCRIPTION } from '@/lib/constants';
 
 function ThemeSwitch() {
   const [mounted, setMounted] = useState(false)
@@ -51,20 +52,21 @@ export default function Footer() {
         </a>
         <div className="relative text-xs text-black/50">
           <ThemeSwitch />
-          <div id="themeDropdown" className="hidden absolute right-0 bottom-0 mb-8 w-24 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10">
+          <div id="themeDropdown" className="hidden absolute right-0 bottom-0 mb-8 w-28 rounded-md shadow-lg bg-white ring-1 ring-[var(--secondary-accent)] ring-opacity-100 z-10">
             <div className="p-1 space-y-2 flex flex-col gap-1 items-center">
-              <p className="text-sm font-medium">upgrade to pro</p>
+              <p className="text-xs font-medium">upgrade to pro</p>
               <div className="flex flex-col gap-1 mt-2 w-full">
                 <Button 
                   variant="secondary" 
                   size="icon"
                   className="h-8 w-full text-xs"
                   onClick={() => {
-                    window.location.href = 'mailto:abdibrokhim@gmail.com?subject=Upgrade%20To%20Pro%20Inquiry%20for%20notlink';
+                    window.open(SUBSCRIPTION, '_blank')
                   }}
                 >
                   <SparklesIcon className="w-3 h-3" />
-                  <span className='ml-2 text-xs inline'>Pro</span>
+                  <span className='mx-2 text-xs inline'>Pro</span>
+                  <SparklesIcon className="w-3 h-3" />
                 </Button>
               </div>
             </div>

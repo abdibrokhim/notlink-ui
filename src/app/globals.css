@@ -154,7 +154,6 @@ body {
   color: var(--text-light-default);
   background: var(--secondary-default);
   font-family: tobias, tobias Fallback;
-  overflow: hidden;
   font-feature-settings: "liga" 1, "kern" 1;
   font-kerning: normal;
   line-height: 1.5;
